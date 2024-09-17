@@ -1,0 +1,106 @@
+#' @import reticulate
+#' @import dplyr
+#' @import stringr
+#' @export
+
+ERNIE_input <- function(input,topgenenumber, species, tissuename) {
+  reticulate::py_run_string("
+import subprocess
+import importlib
+import os
+
+def install_module(module_name):
+    try:
+        # 尝试导入指定模块
+        importlib.import_module(module_name)
+    except ImportError:
+        # 如果导入失败，使用 pip 安装该模块
+        subprocess.check_call(['pip', 'install', module_name])
+install_module('requests')
+
+import requests
+import json
+
+payload = {
+    'user_id': 'python',
+    'messages': [],
+    'disable_search': False,
+    'enable_citation': False
+}
+
+def add_ERNIE_message(role, content):
+    message = {
+        'role': role,
+        'content': content
+    }
+    payload['messages'].append(message)
+
+
+def add_ERNIE_message_2(role, content):
+    message = {
+        'role': role,
+        'content': content
+    }
+    payload['messages'].append(message)
+    if len(payload['messages']) > 2:
+        payload['messages'] = payload['messages'][:-2]
+
+def get_access_ERNIE_token(ERNIE_api_key, ERNIE_secret_key):
+    url = 'https://aip.baidubce.com/oauth/2.0/token'
+    params = {'grant_type': 'client_credentials', 'client_id': ERNIE_api_key, 'client_secret': ERNIE_secret_key}
+    return str(requests.post(url, params=params).json().get('access_token'))
+
+access_ERNIE_token = get_access_ERNIE_token(ERNIE_api_key, ERNIE_secret_key)
+url = 'https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/completions_pro?access_token=' + access_ERNIE_token
+
+def send_request(user_input):
+    add_ERNIE_message('user', user_input)
+    headers = {'Content-Type': 'application/json'}
+    json_payload = json.dumps(payload)
+    response = requests.request('POST', url, headers=headers, data=json_payload)
+    result = response.json().get('result')
+    add_ERNIE_message('assistant', result)
+    return result
+
+def send_request_2(user_input):
+    add_ERNIE_message('user', user_input)
+    headers = {'Content-Type': 'application/json'}
+    json_payload = json.dumps(payload)
+    response = requests.request('POST', url, headers=headers, data=json_payload)
+    result = response.json().get('result')
+    add_ERNIE_message_2('assistant', result)
+    return result
+")
+  top_markers <- input %>% dplyr::group_by(cluster) %>% dplyr::top_n(n = topgenenumber, wt = avg_log2FC)
+  cluster_genes <- top_markers %>%
+    dplyr::group_by(cluster) %>%
+    dplyr::summarise(genes = paste(gene, collapse=", ")) %>%
+    dplyr::ungroup()
+  row_prefixes <- paste("row", 1:nrow(cluster_genes), ":", sep="")
+  formatted_rows <- paste(row_prefixes, cluster_genes$genes, sep=" ")
+  formatted_output <- paste(formatted_rows, collapse="; ")
+  user_input <-paste('You are a cell classification expert who uses the following markers to identify the cell type of',species, tissuename,'ldentify cell types of', species, tissuename, 'using the following markers.Identify one cell type for each of the following rows of marker genes, providing only one cell type.Just reply to the cell type, no need to reply to the reasoning section or explanation section:\n', formatted_output, 'Reply in the following format:
+1: xx
+2: xx
+N: xx
+N is the line number, xx is a phrase that only includes cell types, such as pluripotent stem cells and smooth muscle cells. Do not add additional text!Use "undefined" as a substitute if identification cannot be made.')
+  result1 <- py$send_request(user_input)
+  user_input <- paste(result1,"将上面的文本中的数字和细胞类型或者Undefined按照如下格式提取出来，1: xx
+2: xx
+...: xx
+N: xx
+N为对应的行数，xx为对应的细胞类型，N和xx之间用英文的冒号加空格“: ”分隔", sep = "\n")
+  result = py$send_request_2(user_input)
+  print(result)
+  extract_data <- function(text) {
+    # 使用正则表达式提取数字和细胞名或"undefined"，考虑换行符
+    matches <- str_match_all(text, "(\\d+):\\s*([\\w\\s/]+)(?:\\n|$)")[[1]]
+
+    # 创建数据框
+    result_df <- data.frame(clusters = as.numeric(matches[, 2])-1, cell_type = matches[, 3])
+
+    return(result_df)
+  }
+  result = extract_data(result)
+  return(result)
+}
