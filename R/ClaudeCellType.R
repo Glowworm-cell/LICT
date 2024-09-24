@@ -7,8 +7,8 @@ ClaudeCellType = function(input,topgenenumber,species,tissuename){
                                topgenenumber = topgenenumber,
                                species = species,
                                tissuename = tissuename)
-  start_position <- regexpr("1:", result)
-  result <- substring(result, start_position)
+  start_position <- regexpr("1:", Claude_input_result)
+  result <- substring(Claude_input_result, start_position)
   rows <- strsplit(Claude_input_result, "\n")[[1]]
   data <- sapply(rows, function(row) strsplit(row, ": ")[[1]])
   df1 <- data.frame(clusters = as.integer(gsub(">", "", data[1, ]))-1, cell_type = data[2, ])
