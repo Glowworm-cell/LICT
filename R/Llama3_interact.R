@@ -19,22 +19,11 @@ def chat_with_llama3(user_input):
   user_input <- generate_gene_text(positive_gene = positive_gene, negative_gene = negative_gene)
   result = py$chat_with_llama3(user_input)
   print(result)
-  df1 <- data.frame(Number = integer(), Cell_Type = character(), stringsAsFactors = FALSE)
+  start_position <- regexpr("1:", result)
+  result <- substring(result, start_position)
   rows <- strsplit(result, "\n")[[1]]
   data <- sapply(rows, function(row) strsplit(row, ": ")[[1]])
-  # 遍历列表项
-  for (name in names(data)) {
-    # 判断是否为需要的数据项（以数字开头）
-    if (grepl("^\\d+:", name)) {
-      # 提取数字和细胞类型
-      split_name <- unlist(strsplit(name, ": "))
-      number <- as.integer(split_name[1])
-      cell_type <- split_name[2]
-
-      # 将提取的数据添加到数据框中
-      df1 <- rbind(df1, data.frame(clusters = number-1, cell_type = cell_type, stringsAsFactors = FALSE))
-    }
-  }
+  df1 <- data.frame(clusters = as.integer(gsub(">", "", data[1, ]))-1, cell_type = data[2, ])
   return(df1)
 }
 
