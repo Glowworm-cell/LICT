@@ -20,6 +20,9 @@ def install_module(module_name):
 # List of modules to install
 modules_to_install = ["anthropic", "openai", "pathlib", "textwrap", "ipython"]
 
+for module in modules_to_install:
+    install_module(module)
+
 ')
 }
 
