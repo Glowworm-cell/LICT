@@ -3,15 +3,13 @@
 #' @import stringr
 #' @export
 #'
-MarkerPrompt = function(result, model, species){
+MarkerPrompt = function(result,species){
   mg <- character()
   cluster = numeric()
   row_number <- 1  # 初始化行号
   res1 = result
   for (i in 1:nrow(res1)) {
-    n = res1[i,]# 获取当前行数据
-    # 处理并确保以字符形式处理单元格内容，排除NA值
-    ct <- as.character(n[[model]])
+    ct <- as.character(res1[i,2])
     ct <- na.omit(ct)  # 排除NA值
     if (length(ct) > 0) {  # 只有在ct不为空的情况下才进行下一步
       ct_text <- paste(ct, collapse=", ")
