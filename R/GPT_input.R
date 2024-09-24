@@ -5,6 +5,14 @@
 
 GPT_input <- function(input,topgenenumber, species, tissuename) {
   reticulate::py_run_string('
+def install_module(module_name):
+    try:
+        # 尝试导入指定模块
+        importlib.import_module(module_name)
+    except ImportError:
+        # 如果导入失败，使用 pip 安装该模块
+        subprocess.check_call(["pip", "install", module_name])
+install_module("openai")
 import subprocess
 import importlib
 import openai
