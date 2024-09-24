@@ -17,7 +17,7 @@ def chat_with_gpt4(prompt):
         chat_history.append({"role": "user", "content": prompt})
 
         # 调用 ChatGPT-4 API
-        response = openai.ChatCompletion.create(
+        response = openai.chat.completions.create(
             model="gpt-4-turbo-preview",  # 确保使用正确的模型名称
             messages=chat_history
         )
