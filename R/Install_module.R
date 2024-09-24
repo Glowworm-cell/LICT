@@ -18,11 +18,12 @@ def install_module(module_name):
         subprocess.check_call(["pip", "install", module_name])
 
 # List of modules to install
-modules_to_install = ["anthropic", "google-generativeai", "pathlib", "textwrap", "ipython"]
+modules_to_install = ["anthropic", "openai", "pathlib", "textwrap", "ipython"]
 
 # Install each module
 for module in modules_to_install:
     install_module(module)
+pip install -U google-generativeai
 ')
 }
 
