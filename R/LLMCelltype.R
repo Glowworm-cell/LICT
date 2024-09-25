@@ -4,7 +4,7 @@
 #' @export
 
 
-LLMCelltype = function(FindAllMarkersResult,topgenenumber,species,tissuename){
+LLMCellType = function(FindAllMarkersResult,topgenenumber,species,tissuename){
   tryCatch(if(Sys.getenv("ERNIE_api_key", "") != ""&Sys.getenv("ERNIE_secret_key", "") != ""){
     print('ERNIE is analyzing')
     ERNIE = ERNIECellType(input = FindAllMarkersResult,
@@ -23,7 +23,7 @@ LLMCelltype = function(FindAllMarkersResult,topgenenumber,species,tissuename){
   }else{
     print('Error: Gemini API key not provided')
   })
-  tryCatch(if(Sys.getenv("openai.api_key", "") != ""){
+  tryCatch(if(Sys.getenv("openai.api_key", "") != ""| Sys.getenv("openai_api_key", "") != ""){
     print('ChatGPT is analyzing')
     GPT = GPTCellType(input = FindAllMarkersResult,
                       topgenenumber = topgenenumber,

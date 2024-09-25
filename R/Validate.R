@@ -49,7 +49,7 @@ def chat_with_gpt4_validate(prompt):
   Transform the above reply into an R language dataframe code.
   Do not reply with any words other than follow format:
   markerdata <- data_frame(
-  Row = c(1,2,3...),##row number
+  Row = c(1,2,3...),##the row number before the gene
   Marker_Gene = c(
     "NCR1, KIR2DL1, KIR2DL3...",##row1 marker gene
     "CD3D, CD3E, CD3G...",##row2 marker gene

@@ -24,6 +24,6 @@ MarkerPrompt = function(result,species){
 
   specie = species
   # 生成最终输出
-  output_text <- paste('Provide key marker genes for the following ', specie, ' cell types, with 15 key marker genes per cell type. Provide only the abbreviated gene names of key marker genes, full names are not required:\n', final_text, '\nThe format of the final response should be:\n\n1: gene1, gene2, gene3\n2: gene1, gene2, gene3\nN: gene1, gene2, gene3\n\n...where N represents the row number and gene1, gene2, gene3 represent key marker genes.', sep="")
+  output_text <- paste('Provide key marker genes for the following ', specie, ' cell types, with 15 key marker genes per cell type. Provide only the abbreviated gene names of key marker genes, full names are not required:\n', final_text, '\nThe format of the final response should be:\n\row1: gene1, gene2, gene3\nrow2: gene1, gene2, gene3\nrowN: gene1, gene2, gene3\n\n...where rowN represents the row number and gene1, gene2, gene3 represent key marker genes.', sep="")
   print(output_text)
 }

@@ -24,15 +24,10 @@ N: xx
 N为对应的行数，xx为对应的细胞类型，N和xx之间用英文的冒号加空格“: ”分隔", sep = "\n")
   result = py$send_request_2(user_input)
   print(result)
-  extract_data <- function(text) {
-    # 使用正则表达式提取数字和细胞名或"undefined"，考虑换行符
-    matches <- str_match_all(text, "(\\d+):\\s*([\\w\\s/]+)(?:\\n|$)")[[1]]
-
-    # 创建数据框
-    result_df <- data.frame(clusters = as.numeric(matches[, 2])-1, cell_type = matches[, 3])
-
-    return(result_df)
-  }
-  result = extract_data(result)
-  return(result)
+  start_position <- regexpr("1:", result)
+  result <- substring(result, start_position)
+  rows <- strsplit(result, "\n")[[1]]
+  data <- sapply(rows, function(row) strsplit(row, ": ")[[1]])
+  df1 <- data.frame(clusters = as.integer(gsub(">", "", data[1, ]))-1, cell_type = data[2, ])
+  return(df1)
 }
