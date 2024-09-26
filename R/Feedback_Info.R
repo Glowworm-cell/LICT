@@ -18,6 +18,7 @@ Feedback_Info <- function(Validate_Df, Start, End, FindAllMarkersResult) {
       dplyr::summarise(genes_positive_marker = paste(gene, collapse=",")) %>%
       dplyr::ungroup()
     Validate_df = cbind(cluster_genes, Validate_df)
+    print('more Differential expressed gene were extracted from provided DEG table..')
 
     # Loop through each row of Validate_df
     for (i in 1:nrow(Validate_df)) {
@@ -52,8 +53,8 @@ Feedback_Info <- function(Validate_Df, Start, End, FindAllMarkersResult) {
 
   Feedback_Info1  = Info1(Validate_Df, 11, 20, markers)
 
-  Feedback_Info1[Feedback_Info1$unreliabe == "NO", ]$all_positive_marker = ''
-  Feedback_Info1[Feedback_Info1$unreliabe == "NO", ]$all_negative_marker = ''
+  Feedback_Info1[Feedback_Info1$unrelialbe == "NO", ]$all_positive_marker = ''
+  Feedback_Info1[Feedback_Info1$unrelialbe == "NO", ]$all_negative_marker = ''
 
   remove_commas_at_ends <- function(x) {
     gsub("^,|,$", "", x)

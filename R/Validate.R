@@ -58,7 +58,7 @@ def chat_with_gpt4_validate(prompt):
   )
 )')
       result2 = py$chat_with_gpt4_validate(Marker_Prompt2)
-      print(result2)
+      #print(result2)
       formatted_result2 <- gsub("\\\\n", "\n", result2)
       # 移除最开始的 "R\n"，因为它不是有效的R代码的一部分
       formatted_result2 <- sub("R\n", "", formatted_result2)
@@ -76,7 +76,7 @@ def chat_with_gpt4_validate(prompt):
       pn_gene <- data.frame(cluters = numeric(), positive_marker = character(), negative_marker = character(), stringsAsFactors = FALSE)
 
       for(i in cluster){
-        print(i)
+        #print(i)
         all_cells <- subset(seurat_obj, idents = levels_order[i])
         marker_gene = unlist(str_split(markerdata[markerdata$Row == i,]$Marker_Gene, ', '))
         positive_marker = character()
@@ -84,7 +84,7 @@ def chat_with_gpt4_validate(prompt):
         for(j in marker_gene){
           tryCatch({
             if(any(rownames(all_cells) == j)){
-              print(j)
+              #print(j)
               code <- paste0("positive_cell = subset(all_cells,", j , ">0)")
               eval(parse(text = code))
               percent = nrow(positive_cell@meta.data)/nrow(all_cells@meta.data)
@@ -94,12 +94,12 @@ def chat_with_gpt4_validate(prompt):
                 negative_marker = c(negative_marker,j)
               }
             }else{
-              print(j)
-              print('Can not find marker gene in the data')
+              #print(j)
+              #print('Can not find marker gene in the data')
             }
           }, error = function(e) {
             # 打印错误消息
-            print(paste("Error at marker gene ", j, ":", e$message))
+            #print(paste("Error at marker gene ", j, ":", e$message))
           })
         }
         positive_marker = paste(positive_marker, collapse=",")
@@ -154,7 +154,7 @@ def chat_with_gpt4_validate(prompt):
     pn_gene <- data.frame(cluters = numeric(), positive_marker = character(), negative_marker = character(), stringsAsFactors = FALSE)
 
     for(i in cluster){
-      print(i)
+      #print(i)
       all_cells <- subset(seurat_obj, idents = levels_order[i])
       marker_gene = unlist(str_split(markerdata[markerdata$Row == i,]$Marker_Gene, ', '))
       positive_marker = character()
@@ -162,7 +162,7 @@ def chat_with_gpt4_validate(prompt):
       for(j in marker_gene){
         tryCatch({
           if(any(rownames(all_cells) == j)){
-            print(j)
+            #print(j)
             code <- paste0("positive_cell = subset(all_cells,", j , ">0)")
             eval(parse(text = code))
             percent = nrow(positive_cell@meta.data)/nrow(all_cells@meta.data)
@@ -172,12 +172,12 @@ def chat_with_gpt4_validate(prompt):
               negative_marker = c(negative_marker,j)
             }
           }else{
-            print(j)
-            print('Can not find marker gene in the data')
+            #print(j)
+            #print('Can not find marker gene in the data')
           }
         }, error = function(e) {
           # 打印错误消息
-          print(paste("Error at marker gene ", j, ":", e$message))
+          #print(paste("Error at marker gene ", j, ":", e$message))
         })
       }
       positive_marker = paste(positive_marker, collapse=",")

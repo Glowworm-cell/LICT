@@ -94,6 +94,14 @@ N为对应的行数，xx为对应的细胞类型，N和xx之间用英文的冒�
   print(result)
   start_position <- regexpr("1:", result)
   result <- substring(result, start_position)
+  end_position <- regexpr("\n\n", result)
+  # 检查是否找到'\n\n'
+  if (end_position > 0) { # 如果找到'\n\n'
+    # 以'\n\n'之前的内容作为新的字符串
+    result <- substring(result, 1, end_position - 1)
+  } else { # 如果没有找到'\n\n'
+    # 不做改变，保留原字符串
+  }
   rows <- strsplit(result, "\n")[[1]]
   data <- sapply(rows, function(row) strsplit(row, ": ")[[1]])
   df1 <- data.frame(clusters = as.integer(gsub(">", "", data[1, ]))-1, cell_type = data[2, ])

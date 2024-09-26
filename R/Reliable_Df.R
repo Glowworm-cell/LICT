@@ -2,7 +2,7 @@
 #' @import stringr
 #' @export
 
-Validate_Result_to_Df <- function(Validate_result) {
+Reliable_Df <- function(Validate_result) {
   Validateres = Validate_result
   ####Organize the results of the Validate() function into a data frame.
   Validate_df = cbind(Validateres$ERNIE,Validateres$Gemini,Validateres$GPT,Validateres$Llama,Validateres$Claude)
@@ -24,17 +24,27 @@ Validate_Result_to_Df <- function(Validate_result) {
     }
   })
   df = df_count
-  df$relialbe = rep('NO',nrow(df))
-  df$unrelialbe = rep('NO',nrow(df))
-  ####Confirming accurate cell annotation if the expression of more than four characteristic genes aligns with expected patterns
+  df$Total_relialbe = rep('NO',nrow(df))
+  df$ERNIE_relialbe = rep('NO',nrow(df))
+  df$GPT_relialbe = rep('NO',nrow(df))
+  df$Gemini_relialbe = rep('NO',nrow(df))
+  df$Llama_relialbe = rep('NO',nrow(df))
+  df$Claude_relialbe = rep('NO',nrow(df))
   for(i in 1:nrow(df)){
     n = df[i,]
     if(n$ERNIE_positive_marker>=4 | n$Gemini_positive_marker>=4 | n$GPT_positive_marker>=4 | n$Llama_positive_marker>=4 | n$Claude_positive_marker>=4){
-      df[i,"relialbe"] = 'YES'
-    }else{
-      df[i,"unrelialbe"] = 'YES'
+      df[i,"Total_relialbe"] = 'YES'
     }
   }
-  Validate_df = cbind(Validate_df, df[,26:27])
+  ####Confirming accurate cell annotation if the expression of more than four characteristic genes aligns with expected patterns
+  for(i in 1:nrow(df)){
+    n = df[i,]
+    for(j in c('ERNIE_positive_marker','GPT_positive_marker','Gemini_positive_marker','Llama_positive_marker','Claude_positive_marker')){
+      if(n[,j]>=4){
+        df[i,paste0(as.character(sapply(j, function(x) gsub('_positive_marker', "", x))), "_relialbe")] = 'YES'
+      }
+    }
+  }
+  Validate_df = df[,26:31]
   return(Validate_df)
 }
