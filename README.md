@@ -4,8 +4,6 @@ Our [article](https://arxiv.org/abs/2409.15678) is currently published on arXiv.
 
 Reliability in cell type annotation is challenging in single-cell RNA-sequencing data analysis because both expert-driven and automated methods can be biased or constrained by their training data, especially for novel or rare cell types. Although large language models (LLMs) are useful, our evaluation found that only a few matched expert annotations due to biased data sources and inflexible training inputs. To overcome these limitations, we developed the LICT (Large language model-based Identifier for Cell Types) software package using a multi-model integration and “talk-to-machine” strategy. Tested across various single-cell RNA sequencing datasets, our approach significantly improved annotation reliability, especially in datasets with low cellular heterogeneity. Notably, we established an objective framework to assess annotation reliability using the “talk-to-machine” approach, which addresses discrepancies between our annotations and expert ones, enabling reliable evaluation even without reference data. This strategy enhances annotation credibility and sets the stage for advancing future LLM-based cell type annotation methods.
 
-====
-
 ## Installation 
 
 To install the latest version of LICT package via Github, run the following commands in R:
