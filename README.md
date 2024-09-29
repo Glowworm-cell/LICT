@@ -75,7 +75,7 @@ interacted_res = Feedback_Info(Validate_Result_to_Df, 11, 20, markers)
 ### ⚠️Warning: avoid sharing your API key with others or uploading it to public spaces.
 
 ## Vignette
-You can view the complete vignette [here](https://github.com/Glowworm-cell/Wenjin-Ye/blob/main/vignette.html).
+You can view the complete vignette [here](https://glowworm-cell.github.io/Wenjin-Ye.github.io/vignette.html).
 
 ## Contact
 
