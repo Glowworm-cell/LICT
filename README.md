@@ -20,6 +20,11 @@ The recommended version for Python is 3.9 or higher, and for R, it is 4.2 or abo
 
 ```{r eval = FALSE}
 
+# Load Seurat object
+
+librar(Seurat)
+seurat_obj = readRDS('../../gc.rds')
+
 # IMPORTANT! Assign your API key. See Vignette for details
 Sys.setenv(Llama3_api_key = 'Replace_your_key')
 Sys.setenv(Llama3_secret_key = 'Replace_your_key')
@@ -29,7 +34,7 @@ Sys.setenv(GEMINI_api_key = 'Replace_your_key')
 Sys.setenv(openai.api_key = 'Replace_your_key')
 Sys.setenv(ANTHROPIC_API_KEY = "Replace_your_key")
 
-# loading API key to Python
+# Load API key to Python
 
 reticulate::py_run_string("
 import os
