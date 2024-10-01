@@ -1,4 +1,4 @@
-LICT:Large language model-based Identifier for Cell Types
+## LICT:Large language model-based Identifier for Cell Types
 
 Our [article](https://arxiv.org/abs/2409.15678) is currently published on arXiv.
 
