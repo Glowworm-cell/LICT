@@ -13,7 +13,7 @@ remotes::install_github("Glowworm-cell/LICT")
 
 ## Necessary preparation before start
 
-The recommended version for Python is 3.9 or higher, and for R, it is 4.2 or above.<br>Necessary Python modules: anthropic(version=0.25.8), openai(version=0.28.1), pathlib, textwrap, ipython, google-generativeai
+The recommended version for Python is 3.9 or higher, and for R, it is 4.2 or above.<br>Necessary Python modules: <br>anthropic(version=0.25.8); <br>openai(version=0.28.1); <br>pathlib; <br>textwrap, <br>ipython, <br>google-generativeai
 
 ##  🚀 Quick start with Seurat pipeline 
 
