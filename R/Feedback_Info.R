@@ -53,8 +53,10 @@ Feedback_Info <- function(Validate_Df, Start, End, FindAllMarkersResult) {
 
   Feedback_Info1  = Info1(Validate_Df, 11, 20, markers)
 
-  Feedback_Info1[Feedback_Info1$unrelialbe == "NO", ]$all_positive_marker = ''
-  Feedback_Info1[Feedback_Info1$unrelialbe == "NO", ]$all_negative_marker = ''
+  if(nrow(Feedback_Info1[Feedback_Info1$unreliable == "NO", ])!=0){
+    Feedback_Info1[Feedback_Info1$unreliable == "NO", ]$all_positive_marker = ''
+    Feedback_Info1[Feedback_Info1$unreliable == "NO", ]$all_negative_marker = ''
+  }
 
   remove_commas_at_ends <- function(x) {
     gsub("^,|,$", "", x)
