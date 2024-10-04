@@ -42,7 +42,7 @@ def chat_with_gpt4_validate(prompt):
     for(n in names(LLM_res)){
       input = LLM_res[[n]]
       Marker_Prompt = MarkerPrompt(result = input,
-                                   species = 'human')
+                                   species = species)
       result = py$chat_with_gpt4_validate(Marker_Prompt)
       print(result)
       Marker_Prompt2 = ('
