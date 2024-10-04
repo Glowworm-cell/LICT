@@ -4,7 +4,7 @@
 #' @export
 #'
 #'
-Validate <- function(LLM_res, seurat_obj, Percent) {
+Validate <- function(LLM_res, seurat_obj, Percent,species) {
   reticulate::py_run_string('
 import subprocess
 import openai
@@ -119,7 +119,7 @@ def chat_with_gpt4_validate(prompt):
     print('dataframe')
     input = LLM_res
     Marker_Prompt = MarkerPrompt(result = input,
-                                 species = 'human')
+                                 species = species)
     print('Marker_Prompt')
     result = py$chat_with_gpt4_validate(Marker_Prompt)
     print(result)
