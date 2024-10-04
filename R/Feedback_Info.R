@@ -51,7 +51,7 @@ Feedback_Info <- function(Validate_Df, Start, End, FindAllMarkersResult) {
     return(Validate_df[,29:31])
   }
 
-  Feedback_Info1  = Info1(Validate_Df, 11, 20, markers)
+  Feedback_Info1  = Info1(Validate_Df, 11, 20, FindAllMarkersResult)
 
   if(nrow(Feedback_Info1[Feedback_Info1$unreliable == "NO", ])!=0){
     Feedback_Info1[Feedback_Info1$unreliable == "NO", ]$all_positive_marker = ''
