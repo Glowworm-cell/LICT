@@ -24,16 +24,16 @@ Reliable_Df <- function(Validate_result) {
     }
   })
   df = df_count
-  df$Total_relialbe = rep('NO',nrow(df))
-  df$ERNIE_relialbe = rep('NO',nrow(df))
-  df$GPT_relialbe = rep('NO',nrow(df))
-  df$Gemini_relialbe = rep('NO',nrow(df))
-  df$Llama_relialbe = rep('NO',nrow(df))
-  df$Claude_relialbe = rep('NO',nrow(df))
+  df$Total_reliable = rep('NO',nrow(df))
+  df$ERNIE_reliable = rep('NO',nrow(df))
+  df$GPT_reliable = rep('NO',nrow(df))
+  df$Gemini_reliable = rep('NO',nrow(df))
+  df$Llama_reliable = rep('NO',nrow(df))
+  df$Claude_reliable = rep('NO',nrow(df))
   for(i in 1:nrow(df)){
     n = df[i,]
     if(n$ERNIE_positive_marker>=4 | n$Gemini_positive_marker>=4 | n$GPT_positive_marker>=4 | n$Llama_positive_marker>=4 | n$Claude_positive_marker>=4){
-      df[i,"Total_relialbe"] = 'YES'
+      df[i,"Total_reliable"] = 'YES'
     }
   }
   ####Confirming accurate cell annotation if the expression of more than four characteristic genes aligns with expected patterns
