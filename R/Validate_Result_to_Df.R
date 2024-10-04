@@ -24,15 +24,15 @@ Validate_Result_to_Df <- function(Validate_result) {
     }
   })
   df = df_count
-  df$relialbe = rep('NO',nrow(df))
-  df$unrelialbe = rep('NO',nrow(df))
+  df$reliable = rep('NO',nrow(df))
+  df$unreliable = rep('NO',nrow(df))
   ####Confirming accurate cell annotation if the expression of more than four characteristic genes aligns with expected patterns
   for(i in 1:nrow(df)){
     n = df[i,]
     if(n$ERNIE_positive_marker>=4 | n$Gemini_positive_marker>=4 | n$GPT_positive_marker>=4 | n$Llama_positive_marker>=4 | n$Claude_positive_marker>=4){
-      df[i,"relialbe"] = 'YES'
+      df[i,"reliable"] = 'YES'
     }else{
-      df[i,"unrelialbe"] = 'YES'
+      df[i,"unreliable"] = 'YES'
     }
   }
   Validate_df = cbind(Validate_df, df[,26:27])
