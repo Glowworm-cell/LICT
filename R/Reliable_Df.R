@@ -41,7 +41,7 @@ Reliable_Df <- function(Validate_result) {
     n = df[i,]
     for(j in c('ERNIE_positive_marker','GPT_positive_marker','Gemini_positive_marker','Llama_positive_marker','Claude_positive_marker')){
       if(n[,j]>=4){
-        df[i,paste0(as.character(sapply(j, function(x) gsub('_positive_marker', "", x))), "_relialbe")] = 'YES'
+        df[i,paste0(as.character(sapply(j, function(x) gsub('_positive_marker', "", x))), "_reliable")] = 'YES'
       }
     }
   }
